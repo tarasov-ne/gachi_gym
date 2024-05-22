@@ -1,0 +1,40 @@
+.loginFieldTAF, .passwordFieldTAF {
+    width: 20rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.authForm {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.TAFwrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.TAFSubmit {
+    border: 1px lightgray solid;
+    border-radius: 5px;
+    width: 30%;
+    height: 20%;
+    margin: 10px;
+}
+
+.TAFSubmitWrapper {
+    display: flex;
+    justify-content: center;
+    height: 10rem;
+}   
+
+#loginIdTAF, #passwordIdTAF {
+    border-radius: 5px;
+    border: gray 1px solid;
+    margin: 0.5rem 0rem 0.5rem 0rem;
+    height: 2rem;
+    font-size: larger;
+}
