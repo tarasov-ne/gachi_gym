@@ -190,6 +190,7 @@ const BookingPopup = ({ selectedSlot, selectedEvent, events, onClose }: any) => 
             return false; // Disable if time slot is already taken by the same trainer
           }
         }
+        
         return true;
       });
     };
