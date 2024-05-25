@@ -1,0 +1,49 @@
+/* MembershipRegistration.css */
+.membership-registration {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.membership-registration h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.memberships {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.membership-card {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.membership-card h2 {
+    margin-top: 0;
+}
+
+.membership-card p {
+    margin: 10px 0;
+}
+
+.membership-card button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.membership-card button:hover {
+    background: #0056b3;
+}

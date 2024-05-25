@@ -1,0 +1,84 @@
+.userAddForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 5;
+    margin-top: 1rem;
+}
+
+.addUserFormWrapper{
+    width: 40%;
+    padding: 1rem;
+    user-select: none;
+}
+
+.addUserInputFieldWrapper {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.addUserInputFieldWrapper > input, select {
+    height: 2rem;
+    font-size: large;
+    border-radius: 0.5rem;
+    border: gray 1px solid;
+    padding-left: 0.5rem;
+}
+
+.addUserTimeFieldsWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.addUserTimeFields {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.addUserTimeField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    flex-grow: 1;
+}
+
+.addUserTimeField > label {
+    font-size: small;
+    color: rgb(110, 110, 110);
+}
+
+.addUserTimeField > input {
+    height: 2rem;
+    font-size: large;
+    border-radius: 0.5rem;
+    border: gray 1px solid;
+    padding-left: 0.5rem;
+}
+
+.addUserSubmitButton {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.addUserSubmitButton > button {
+    height: 3rem;
+    width: 8rem;
+    
+    border: 1px gray solid;
+    border-radius: 1rem;
+    transition: all 0.2s;
+    font-size: large;
+}
+
+.addUserSubmitButton > button:hover {
+    scale: 1.1;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    
+}
