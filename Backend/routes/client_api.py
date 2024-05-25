@@ -95,4 +95,3 @@ def client_api(app):
         db.session.delete(client)
         db.session.commit()
         return jsonify(1)
-        
