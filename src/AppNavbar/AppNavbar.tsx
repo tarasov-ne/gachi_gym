@@ -44,38 +44,35 @@ export default function AppNavbar() {
   function logout() {
     setIsLoggedIn(false);
     localStorage.clear();
-    <Navigate to="/auth" />
   }
 
   return (
     <div className="appNavbar">
-      {clientInfo.id !== 1 ? (
+      <Link to={"/"}>
+        <div style={getStyleNav("/")}>Membership</div>
+      </Link>
+      {clientInfo.membership_active && (
         <>
-          <Link to={"/"}>
-            <div style={getStyleNav("/")}>Membership</div>
+          <Link to={"/training-registration"}>
+            <div style={getStyleNav("/training-registration")}>
+              Training registration
+            </div>
           </Link>
-          {clientInfo.membership_active && (
-            <>
-              <Link to={"/training-registration"}>
-                <div style={getStyleNav("/training-registration")}>
-                  Training registration
-                </div>
-              </Link>
-              <Link to={"/purchase"}>
-                <div style={getStyleNav("/purchase")}>Purchase</div>
-              </Link>
-            </>
-          )}
+          <Link to={"/purchase"}>
+            <div style={getStyleNav("/purchase")}>Purchase</div>
+          </Link>
         </>
-      ) : (
+      )}
+      {clientInfo.id === 1 && (
         <Link to={"/admin-page"}>
           <div style={getStyleNav("/admin-page")}>Admin Page</div>
         </Link>
       )}
+
       <Link to={"/auth"} className="but" onClick={logout}>
         <div style={getStyleNav("/auth")}>Logout</div>
       </Link>
-      {clientInfo.membership_active && clientInfo.id !== 1 && (
+      {clientInfo.membership_active && (
         <div className="membership-info">
           Абонемент закончится через {remainingDays} дней.
         </div>

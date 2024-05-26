@@ -1,48 +1,64 @@
+import { useState } from 'react';
 import ClientTable from './ClientTable';
-import MemberShipRegistrationTable from './MemberShipRegistrationTable';
 import MembershipTable from './MembershipTable';
 import ProductTable from './ProductTable';
 import PurchaseTable from './PurchaseTable';
 import TrainerTable from './TrainerTable';
 import TrainingRegistrationTable from './TrainingRegistrationTable';
+import MembershipRegistrationTable from './MembershipRegistrationTable';
 import VisitStatisticTable from './VisitStatisticTable';
 import './AdminStatistics.css';
 
+const tableComponents = {
+  ClientTable,
+  MembershipTable,
+  MembershipRegistrationTable,
+  ProductTable,
+  PurchaseTable,
+  TrainerTable,
+  TrainingRegistrationTable,
+  VisitStatisticTable
+} as const;
+
+const tableNames = [
+  "Client Table",
+  "Membership Table",
+  "Membership Registration Table",
+  "Product Table",
+  "Purchase Table",
+  "Trainer Table",
+  "Training Registration Table",
+  "Visit Statistic Table"
+] as const;
+
+type TableName = typeof tableNames[number];
+
 export default function AdminStatistics() {
+  const [selectedTable, setSelectedTable] = useState<TableName>("Client Table");
+
+  const TableComponent = tableComponents[
+    selectedTable.replace(/ /g, '') as keyof typeof tableComponents
+  ];
+
   return (
     <div className="adminStatisticsContainer">
       <h1>Admin Statistics</h1>
-      <div className="tableContainer">
-        <h2>Client Table</h2>
-        <ClientTable />
+      <div className="tableSelection">
+        <ul>
+          {tableNames.map(name => (
+            <li
+              key={name}
+              onClick={() => setSelectedTable(name)}
+              className={name === selectedTable ? 'active' : ''}
+            >
+              {name}
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="tableContainer">
-        <h2>Membership Registration Table</h2>
-        <MemberShipRegistrationTable />
-      </div>
-      <div className="tableContainer">
-        <h2>Membership Table</h2>
-        <MembershipTable />
-      </div>
-      <div className="tableContainer">
-        <h2>Product Table</h2>
-        <ProductTable />
-      </div>
-      <div className="tableContainer">
-        <h2>Purchase Table</h2>
-        <PurchaseTable />
-      </div>
-      <div className="tableContainer">
-        <h2>Trainer Table</h2>
-        <TrainerTable />
-      </div>
-      <div className="tableContainer">
-        <h2>Training Registration Table</h2>
-        <TrainingRegistrationTable />
-      </div>
-      <div className="tableContainer">
-        <h2>Visit Statistic Table</h2>
-        <VisitStatisticTable />
+        <h2>{selectedTable}</h2>
+        <TableComponent />
       </div>
     </div>
   );

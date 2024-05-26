@@ -88,25 +88,25 @@ export default function AuthPage() {
       <div className='TAFwrapper'>
         <form onSubmit={authForm.handleSubmit} onKeyUp={(e) => {if(e.key === "Enter"){authForm.handleSubmit(e)}}}>
           <div style={{display: 'flex', justifyContent: 'center'}}>
-            <h1>Authorisation</h1>
+            <h1>Авторизация</h1>
           </div>
 
           <div className='loginFieldTAF'>
-            <label>Login</label>
+            <label>Логин</label>
             <input id='loginIdTAF' name='login' type='text' placeholder='Login' 
             onBlur={authForm.handleBlur} onChange={authForm.handleChange} value={authForm.values.login}/>
             {authForm.errors.login && authForm.touched.login && <p style={{marginTop: "0.5rem", color: "red"}}>{authForm.errors.login}</p>}
           </div>
 
           <div className='passwordFieldTAF'>
-            <label>Password</label>
+            <label>Пароль</label>
             <input id='passwordIdTAF' name='password' type='password' placeholder='Password' 
             onBlur={authForm.handleBlur} onChange={authForm.handleChange} value={authForm.values.password}/>
             {authForm.errors.password && authForm.touched.password && <p style={{marginTop: "0.5rem", color: "red"}}>{authForm.errors.password}</p>}
           </div>
 
           <div className='TAFSubmitWrapper'>
-            <button type='submit' className='TAFSubmit'>Submit</button>
+            <button type='submit' className='TAFSubmit'>Войти</button>
           </div>
         </form>
         {redirectToRegistration}
