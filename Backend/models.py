@@ -37,16 +37,20 @@ class Trainer(db.Model):
 class VisitStatistic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey("client.id"))
-    start_date = db.Column(db.DateTime)
+    start_date = db.Column(db.Date)
+    start_time = db.Column(db.Time)
     end_date = db.Column(db.DateTime)
+    end_time = db.Column(db.Time)
 
-    def __init__(self, client_id, start_date, end_date):
+    def __init__(self, client_id, start_date, start_time, end_date, end_time):
         self.client_id = client_id
         self.start_date = start_date
+        self.start_time = start_time
         self.end_date = end_date
+        self.end_time = end_time
     
     def serialize(self):
-        return {"id": self.id, "client_id": self.client_id, "start_date": self.start_date, "end_date": self.end_date}
+        return {"id": self.id, "client_id": self.client_id, "start_date": self.start_date, "start_time": str(self.start_time), "end_date": self.end_date, "end_time": str(self.end_time)}
 
 class TrainingRegistration(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -69,19 +73,21 @@ class Purchase(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey("client.id"))
     product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
-    date = db.Column(db.DateTime, default=db.func.now())
+    date = db.Column(db.Date)
+    time = db.Column(db.Time)
     quantity = db.Column(db.Integer())
     total_price = db.Column(db.Integer())
 
-    def __init__(self, client_id, product_id, date, quantity):
+    def __init__(self, client_id, product_id, date, time, quantity):
         self.client_id = client_id
         self.product_id = product_id
         self.date = date
+        self.time = time
         self.quantity = quantity
 
     def serialize(self):
         return {"id": self.id, "client_id": self.client_id, "product_id": self.product_id, 
-                "date": self.date, "quantity": self.quantity, "total_price": self.total_price}
+                "date": self.date, "time": str(self.time), "quantity": self.quantity, "total_price": self.total_price}
 
 
 class Membership(db.Model):
@@ -103,8 +109,8 @@ class MembershipRegistration(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey("client.id"))
     membership_id = db.Column(db.Integer, db.ForeignKey("membership.id"))
-    start_date = db.Column(db.DateTime)
-    end_date = db.Column(db.DateTime)
+    start_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
 
     def __init__(self, client_id, membership_id, start_date):
         self.client_id = client_id

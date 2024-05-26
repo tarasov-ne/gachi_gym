@@ -1,8 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from models import db, Client, Membership, Product, Trainer, VisitStatistic, Purchase, MembershipRegistration, TrainingRegistration
-from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request, JWTManager
-from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
+from flask_jwt_extended import jwt_required, get_jwt_identity, JWTManager
 from routes.membership_api import membership_api
 from routes.client_api import client_api
 from routes.membership_registration_api import membershipRegistration_api
@@ -24,9 +23,9 @@ with app.app_context():
     db.create_all()
 
 @app.route('/api/session', methods=['GET']) 
-@jwt_required()  # Декоратор, требующий JWT для доступа к эндпоинту
+@jwt_required() 
 def session_check():
-    current_user_id = get_jwt_identity()  # Получаем идентификатор текущего пользователя из JWT
+    current_user_id = get_jwt_identity()
     if current_user_id:
         user = Client.query.get(current_user_id)
         if user:
@@ -35,9 +34,8 @@ def session_check():
     return jsonify({"authenticated": False, "user": None, "error": "Unauthorized"}), 401
     
 @app.route('/api/getData', methods=['GET'])
-#@jwt_required()  # Добавляем декоратор, требующий наличие действительного JWT токена
+@jwt_required() 
 def data():
-    # current_user_id = get_jwt_identity()  # Получаем идентификатор текущего пользователя из токена
 
     clients = Client.query.all()
     client_list = [client.serialize() for client in clients]

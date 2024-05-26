@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import apiAxiosInstance from "../api/axios";
 import { clientAtom } from "../App";
 import { useAtom } from "jotai";
-
+import { toast } from "react-toastify";
 import BookingPopup from "./Popup/Popup";
 import { TTrainingReg } from "../@types/trainingRegData";
 
@@ -28,6 +28,26 @@ export default function DatePicker() {
     refetchIntervalInBackground: true,
   });
 
+  const { data: membershipRegistration } = useQuery({
+    queryKey: ["membershipRegistrations_all"],
+    queryFn: async () => {
+      const res = await apiAxiosInstance.get("/getMembershipRegistrations");
+      return res.data as TMemberShipReg[];
+    },
+    refetchInterval: 10 * 60 * 1000,
+    refetchIntervalInBackground: true,
+  });
+
+  const remainingDays = client.membership_active
+    ? membershipRegistration?.reduce((acc, membership) => {
+      if (membership.client_id === client.id) {
+        const diff = moment(membership.end_date).diff(moment(), 'days');
+        return diff > acc ? diff : acc;
+      }
+      return acc;
+    }, 0)
+    : 0;
+
   const events = data?.map((reg: TTrainingReg) => ({
     title: `Клиент ${reg.client.surname}, тренер ${reg.trainer.surname}`,
     start: moment(`${reg.date} ${reg.start}`, "YYYY-MM-DD HH:mm:ss").toDate(),
@@ -36,6 +56,15 @@ export default function DatePicker() {
   }));
 
   const handleSelectSlot = (slotInfo: SlotInfo) => {
+    if (moment(slotInfo.start).isBefore(moment(), "day")) {
+      toast.error("Невозможно выбрать прошедшую дату");
+      return;
+    }
+    const daysUntilSelectedSlot = moment(slotInfo.start).diff(moment(), 'days');
+    if (remainingDays as any < daysUntilSelectedSlot) {
+      toast.error("Невозможно записаться на занятие, так как срок действия абонемента истекает ранее выбранной даты.");
+      return;
+    }
     setSelectedSlot(slotInfo);
     setSelectedEvent(null);
   };

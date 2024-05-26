@@ -1,5 +1,5 @@
 import { atom, useAtom } from "jotai";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import apiAxiosInstance from "./api/axios.ts";
 import AuthPage from "./AuthPage/AuthPage.tsx";
@@ -13,6 +13,7 @@ import AddProductPage from "./AdminPage/AddProductPage/AddProductPage.tsx";
 import AddMembershipPage from "./AdminPage/AddMembershipPage/AddMembershipPage.tsx";
 import MembershipRegistrationPage from "./MembershipRegistrationPage/MembershipRegistrationPage.tsx";
 import PurchasePage from "./PurchasePage/PurchasePage.tsx";
+import RegistrationPage from "./RegistrationPage/RegistrationPage.tsx";
 
 export const clientAtom = atom<TClientData>({
   id: 0,
@@ -24,14 +25,12 @@ export const clientAtom = atom<TClientData>({
   e_mail: "",
   membership_active: false,
 });
-
 export const logInAtom = atom<boolean>(false);
-export const notificationsAtom = atom<Notification_[]>([]);
-export const scheduleController = new AbortController();
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useAtom(logInAtom);
-  const [, setUserInfo] = useAtom(clientAtom);
+  const [clientInfo, setUserInfo] = useAtom(clientAtom);
+  const navigate = useNavigate()
 
   useQuery({
     queryKey: ["session"],
@@ -47,18 +46,17 @@ export default function App() {
     refetchOnMount: true,
     refetchIntervalInBackground: true,
   });
-  if (!isLoggedIn) {
-    return <AuthPage />;
-  }
+
 
   return (
     <Routes>
-      <Route path="/" element={<ClientPage />}>
+      <Route path="/auth" element={<AuthPage />} />
+      <Route path="/" element={isLoggedIn ? <ClientPage /> : <AuthPage />}>
         <Route
           index
           element={
             <div className="mainPageWrapper">
-              <MembershipRegistrationPage />{" "}
+              <MembershipRegistrationPage />
             </div>
           }
         />
@@ -72,6 +70,7 @@ export default function App() {
           <Route path="add-membership" element={<AddMembershipPage />} />
         </Route>
       </Route>
+      <Route path="/register" element={<RegistrationPage />} />
     </Routes>
   );
 }

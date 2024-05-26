@@ -164,39 +164,54 @@ const BookingPopup = ({ selectedSlot, selectedEvent, events, onClose }: any) => 
       startTime.add(90, "minutes");
     }
   
-    const occupiedTimeSlots = events?.filter((event: any) =>
-      event.appointment.trainer.id === selectedTrainer?.id &&
-      moment(event.start).isSame(moment(selectedSlot?.start), 'day')
-    ).map((event: any) => ({
-      start: moment(event.start).format("HH:mm"),
-      end: moment(event.end).format("HH:mm"),
-    }));
+    const selectedDate = moment(selectedSlot?.start).format("YYYY-MM-DD");
+  
+    const occupiedTimeSlots = events
+      ?.filter(
+        (event: any) =>
+          moment(event.start).format("YYYY-MM-DD") === selectedDate
+      )
+      .map((event: any) => ({
+        start: moment(event.start).format("HH:mm"),
+        end: moment(event.end).format("HH:mm"),
+        clientId: event.appointment.client.id,
+        trainerId: event.appointment.trainer.id,
+      }));
   
     const isTimeSlotAvailable = (time: string) => {
-      return !occupiedTimeSlots.some((slot: any) => {
-        const slotStart = moment(slot.start, "HH:mm");
-        const slotEnd = moment(slot.end, "HH:mm");
-        const currentTime = moment(time, "HH:mm");
-        const currentEndTime = moment(time, "HH:mm").add(90, "minutes");
-        
-        // Check if the current time slot overlaps with an occupied slot
-        if (currentTime.isBetween(slotStart, slotEnd, null, '[)') || currentEndTime.isBetween(slotStart, slotEnd, null, '(]')) {
-          // Check if it's the same client booking with a different trainer
-          if (slot.clientId === client.id && slot.trainerId !== selectedTrainer?.id) {
-            return false; // Disable if client has booking with another trainer
+      return (
+        moment(`${selectedDate} ${time}`).isAfter(moment()) &&
+        !occupiedTimeSlots.some((slot: any) => {
+          if (
+            selectedEvent &&
+            slot.start === moment(selectedEvent.start).format("HH:mm") &&
+            slot.clientId === client.id
+          ) {
+            return false; // Exclude the current booking being updated
           }
-          // Check if the time slot is already taken by the same trainer
-          if (slot.trainerId === selectedTrainer?.id) {
-            return false; // Disable if time slot is already taken by the same trainer
-          }
-        }
-        
-        return true;
-      });
+  
+          const slotStart = moment(slot.start, "HH:mm");
+          const slotEnd = moment(slot.end, "HH:mm");
+          const currentTime = moment(time, "HH:mm");
+          const currentEndTime = moment(time, "HH:mm").add(90, "minutes");
+  
+          // Check if the current time slot overlaps with an occupied slot on the same day
+          return (
+            (currentTime.isBetween(slotStart, slotEnd, null, "[)") ||
+              currentEndTime.isBetween(slotStart, slotEnd, null, "(]")) &&
+            (slot.clientId === client.id ||
+              slot.trainerId === selectedTrainer?.id)
+          );
+        })
+      );
     };
   
     return (
-      <select className="popup-select" value={selectedTime as any || ""} onChange={handleTimeChange}>
+      <select
+        className="popup-select"
+        value={(selectedTime as any) || ""}
+        onChange={handleTimeChange}
+      >
         <option value="">Выберите время</option>
         {timeIntervals.map((time, index) => {
           const isAvailable = isTimeSlotAvailable(time);
@@ -209,6 +224,7 @@ const BookingPopup = ({ selectedSlot, selectedEvent, events, onClose }: any) => 
       </select>
     );
   };
+  
   
   
 

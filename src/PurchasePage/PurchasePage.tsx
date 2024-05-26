@@ -114,6 +114,7 @@ export default function PurchasePage() {
                     client_id: clientInfo.id,
                     product_id: selectedProduct.id,
                     date: moment().format('YYYY-MM-DD'),
+                    time: moment().format('HH:mm:ss'),
                     quantity: quantity,
                     total_price: calculateTotalPrice()
                   });
