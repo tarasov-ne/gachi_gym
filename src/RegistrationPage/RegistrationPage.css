@@ -1,0 +1,69 @@
+.authForm {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .TAFwrapper {
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+  }
+  
+  .TAFSubmit {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 100%;
+    height: 2.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+  }
+  
+  .TAFSubmit:hover {
+    background-color: lightgray;
+  }
+  
+  .TAFSubmitWrapper {
+    display: flex;
+    justify-content: center;
+    height: 10rem
+  }
+  
+  #loginIdTAF,
+  #passwordIdTAF,
+  #confirmPasswordIdTAF,
+  #nameIdTAF,
+  #surnameIdTAF,
+  #phoneNumberIdTAF,
+  #emailIdTAF {
+    width: 95%;
+    margin: 0.5rem 0rem;
+    padding: 0.5rem;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+  }
+  
+  .errorMsg {
+    color: red;
+    margin-top: 0.5rem;
+  }
+  
+  .linkToAuth {
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .linkToAuth a {
+    color: blue;
+    text-decoration: none;
+  }
+  
+  .linkToAuth a:hover {
+    text-decoration: underline;
+  }
+  
