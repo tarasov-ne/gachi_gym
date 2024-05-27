@@ -5,19 +5,22 @@ export default function AdminPageNavbar() {
   return (
     <div className="adminPageNavbar">
       <Link to={"/admin-page/"}>
-        <div>Dashboard</div>
+        <div>Таблицы</div>
+      </Link>
+      <Link to={"/admin-page/info"}>
+        <div>Статистика</div>
       </Link>
       <Link to={"/admin-page/add-user"}>
-        <div>Add User</div>
+        <div>Добавление клиента</div>
       </Link>
       <Link to={"/admin-page/add-trainer"}>
-        <div>Add Trainer</div>
+        <div>Добавление тренера</div>
       </Link>
       <Link to={"/admin-page/add-product"}>
-        <div>Add Product</div>
+        <div>Добавление товара</div>
       </Link>
       <Link to={"/admin-page/add-membership"}>
-        <div>Add Membership</div>
+        <div>Добавление абонемента</div>
       </Link>
     </div>
   );

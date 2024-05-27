@@ -21,7 +21,6 @@ export default function DatePicker() {
     queryKey: ["appointments"],
     queryFn: async () => {
       const res = await apiAxiosInstance.get("/getTrainingRegistrations");
-      console.log(res.data);
       return res.data as TTrainingReg[];
     },
     refetchInterval: 10 * 60 * 1000,

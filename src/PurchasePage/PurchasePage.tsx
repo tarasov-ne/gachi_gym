@@ -80,14 +80,14 @@ export default function PurchasePage() {
 
   return (
     <div className="product-listing">
-      <h1>Product Listing</h1>
+      <h1>Список доступных товаров</h1>
       <div className="products">
         {products?.map((product) => (
           <div key={product.id} className="product-card">
             <h2>{product.name}</h2>
             <p>Цена: {product.price} рублей</p>
             <p>Доступно: {product.count}</p>
-            <button onClick={() => handlePurchase(product)}>Purchase</button>
+            <button onClick={() => handlePurchase(product)}>Приобрести</button>
           </div>
         ))}
       </div>

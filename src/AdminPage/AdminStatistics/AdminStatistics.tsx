@@ -42,7 +42,7 @@ export default function AdminStatistics() {
 
   return (
     <div className="adminStatisticsContainer">
-      <h1>Admin Statistics</h1>
+      <h1>Таблицы</h1>
       <div className="tableSelection">
         <ul>
           {tableNames.map(name => (

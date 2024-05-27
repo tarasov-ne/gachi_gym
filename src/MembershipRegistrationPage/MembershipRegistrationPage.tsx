@@ -74,7 +74,7 @@ export default function MembershipRegistrationPage() {
 
   return (
     <div className="membership-registration">
-      <h1>Membership Registration</h1>
+      <h1>Оформление абонемента</h1>
       <div className="memberships">
         {memberships?.map((membership) => (
           <div key={membership.id} className="membership-card">

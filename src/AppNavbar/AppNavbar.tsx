@@ -1,6 +1,6 @@
 import React from "react";
 import { useAtom } from "jotai";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { clientAtom } from "../App";
 import { useQuery } from "@tanstack/react-query";
 import { logInAtom } from "../App";
@@ -42,6 +42,15 @@ export default function AppNavbar() {
   }
 
   function logout() {
+    const endDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
+    apiAxiosInstance.post("/visitStatisticInsert", {
+      client_id: clientInfo.id,
+      start_date: localStorage.getItem("start_date"),
+      start_time: localStorage.getItem("start_time"),
+      end_date: endDateTime.split(" ")[0],
+      end_time: endDateTime.split(" ")[1],
+    });
+
     setIsLoggedIn(false);
     localStorage.clear();
   }
@@ -49,28 +58,28 @@ export default function AppNavbar() {
   return (
     <div className="appNavbar">
       <Link to={"/"}>
-        <div style={getStyleNav("/")}>Membership</div>
+        <div style={getStyleNav("/")}>Абонементы</div>
       </Link>
       {clientInfo.membership_active && (
         <>
           <Link to={"/training-registration"}>
             <div style={getStyleNav("/training-registration")}>
-              Training registration
+              Занятия
             </div>
           </Link>
           <Link to={"/purchase"}>
-            <div style={getStyleNav("/purchase")}>Purchase</div>
+            <div style={getStyleNav("/purchase")}>Магазин</div>
           </Link>
         </>
       )}
       {clientInfo.id === 1 && (
         <Link to={"/admin-page"}>
-          <div style={getStyleNav("/admin-page")}>Admin Page</div>
+          <div style={getStyleNav("/admin-page")}>Управление</div>
         </Link>
       )}
 
       <Link to={"/auth"} className="but" onClick={logout}>
-        <div style={getStyleNav("/auth")}>Logout</div>
+        <div style={getStyleNav("/auth")}>Выйти</div>
       </Link>
       {clientInfo.membership_active && (
         <div className="membership-info">

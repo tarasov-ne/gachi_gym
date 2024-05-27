@@ -12,20 +12,16 @@ def visitStatistic_api(app):
         visitStatistics_list = [visitStatistic.serialize() for visitStatistic in visitStatistics]
         return jsonify(visitStatistics_list)
     
-    @jwt_required()
     @app.route('/api/visitStatisticInsert', methods=['POST'])
     def visitStatisticInsert():
-        current_user = get_jwt_identity
-        client = Client.query.get(current_user)
-        if client:
-            data = request.json
-            start_date = data['start_date']
-            start_time = data['start_time']
-            end_date = data['end_date']
-            end_time = data['end_time']
-            new_visit = VisitStatistic(client_id=client.id, start_date=start_date, start_time=start_time, end_date=end_date, end_time=end_time)
-            db.session.add(new_visit)
-            db.session.commit()
-            return jsonify({"visitStatistic": new_visit.serialize()})
-        else:
-            return jsonify({"error": "no such client"}) 
+        data = request.json
+        print(data)
+        client_id = data["client_id"]
+        start_date = data['start_date']
+        start_time = data['start_time']
+        end_date = data['end_date']
+        end_time = data['end_time']
+        new_visit = VisitStatistic(client_id=client_id, start_date=start_date, start_time=start_time, end_date=end_date, end_time=end_time)
+        db.session.add(new_visit)
+        db.session.commit()
+        return jsonify({"visitStatistic": new_visit.serialize()})
